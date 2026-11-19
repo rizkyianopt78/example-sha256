@@ -1,0 +1,26 @@
+import hmac
+import hashlib
+import secrets
+from datetime import datetime, timezone
+
+client_id = "YOUR_CLIENT_ID"
+secret = "YOUR_CLIENT_SECRET"
+
+# Generate 8 random bytes
+external_id = secrets.token_hex(8)
+
+# Generate RFC3339 timestamp
+timestamp = datetime.now(timezone.utc).isoformat(timespec="seconds").replace("+00:00", "Z")
+
+# HMAC-SHA256
+signing_string = f"{client_id}|{external_id}|{timestamp}"
+
+signature = hmac.new(
+    secret.encode("utf-8"),
+    signing_string.encode("utf-8"),
+    hashlib.sha256
+).hexdigest()
+
+print("External ID:", external_id)
+print("Timestamp:", timestamp)
+print("Signature:", signature)

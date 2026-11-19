@@ -2,7 +2,6 @@ package main
 
 import (
 	"crypto/hmac"
-	"crypto/md5"
 	"crypto/rand"
 	"crypto/sha256"
 	"encoding/hex"
@@ -23,4 +22,5 @@ func main() {
 	mac := hmac.New(sha256.New, []byte(secret))
 	mac.Write([]byte(hmacSigningString))
 	hmacSignature := hex.EncodeToString(mac.Sum(nil))
+	fmt.Println(hmacSignature)
 }
